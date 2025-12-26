@@ -1,5 +1,4 @@
 # TM4C123 Simulation Script for Renode
-# For Valvano course labs
 
 using sysbus
 mach create "tm4c123"
