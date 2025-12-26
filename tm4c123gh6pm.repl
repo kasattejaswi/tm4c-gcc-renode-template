@@ -1,6 +1,5 @@
 // TM4C123GH6PM Platform Description for Renode
 // Texas Instruments Tiva C Series (Cortex-M4F)
-// The TM4C UART is compatible with ARM PL011
 
 cpu: CPU.CortexM @ sysbus
     cpuType: "cortex-m4f"
@@ -17,16 +16,34 @@ flash: Memory.MappedMemory @ sysbus 0x00000000
 sram: Memory.MappedMemory @ sysbus 0x20000000
     size: 0x8000
 
-// TM4C123 UART0 is compatible with ARM PL011 UART
+// UART0 - compatible with ARM PL011
 uart0: UART.PL011 @ sysbus 0x4000C000
     -> nvic@5
 
-sysbus:
-    init:
-        Tag <0x400FE000, 0x400FEFFF> "SYSCTL"
-        Tag <0x40004000, 0x40004FFF> "GPIO_PORTA"
-        Tag <0x40005000, 0x40005FFF> "GPIO_PORTB"
-        Tag <0x40006000, 0x40006FFF> "GPIO_PORTC"
-        Tag <0x40007000, 0x40007FFF> "GPIO_PORTD"
-        Tag <0x40024000, 0x40024FFF> "GPIO_PORTE"
-        Tag <0x40025000, 0x40025FFF> "GPIO_PORTF"
+// System Control - stub memory to absorb reads/writes
+sysctl: Memory.MappedMemory @ sysbus 0x400FE000
+    size: 0x1000
+
+// GPIO Port A (UART pins) - stub memory
+gpioPortA: Memory.MappedMemory @ sysbus 0x40004000
+    size: 0x1000
+
+// GPIO Port B - stub memory
+gpioPortB: Memory.MappedMemory @ sysbus 0x40005000
+    size: 0x1000
+
+// GPIO Port C - stub memory
+gpioPortC: Memory.MappedMemory @ sysbus 0x40006000
+    size: 0x1000
+
+// GPIO Port D - stub memory
+gpioPortD: Memory.MappedMemory @ sysbus 0x40007000
+    size: 0x1000
+
+// GPIO Port E - stub memory
+gpioPortE: Memory.MappedMemory @ sysbus 0x40024000
+    size: 0x1000
+
+// GPIO Port F (LEDs and buttons) - stub memory
+gpioPortF: Memory.MappedMemory @ sysbus 0x40025000
+    size: 0x1000
