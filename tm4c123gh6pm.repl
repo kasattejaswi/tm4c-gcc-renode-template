@@ -1,0 +1,32 @@
+// TM4C123GH6PM Platform Description for Renode
+// Texas Instruments Tiva C Series (Cortex-M4F)
+// The TM4C UART is compatible with ARM PL011
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m4f"
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    priorityMask: 0xF0
+    systickFrequency: 80000000
+    IRQ -> cpu@0
+
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x40000
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x8000
+
+// TM4C123 UART0 is compatible with ARM PL011 UART
+uart0: UART.PL011 @ sysbus 0x4000C000
+    -> nvic@5
+
+sysbus:
+    init:
+        Tag <0x400FE000, 0x400FEFFF> "SYSCTL"
+        Tag <0x40004000, 0x40004FFF> "GPIO_PORTA"
+        Tag <0x40005000, 0x40005FFF> "GPIO_PORTB"
+        Tag <0x40006000, 0x40006FFF> "GPIO_PORTC"
+        Tag <0x40007000, 0x40007FFF> "GPIO_PORTD"
+        Tag <0x40024000, 0x40024FFF> "GPIO_PORTE"
+        Tag <0x40025000, 0x40025FFF> "GPIO_PORTF"

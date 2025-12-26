@@ -1,0 +1,15 @@
+# TM4C123 Simulation Script for Renode
+# For Valvano course labs
+
+using sysbus
+mach create "tm4c123"
+machine LoadPlatformDescription @tm4c123gh6pm.repl
+
+# Load the compiled program
+sysbus LoadELF @build/main.elf
+
+# Show UART0 output in a terminal window
+showAnalyzer uart0
+
+# Start the simulation
+start
